@@ -26,7 +26,17 @@ SECRET_KEY = 'django-insecure-=jg@p10i=tmewr)*nb8mf%vq7i-j8&89u!&*o!2!0^_gw1t43y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
+AUTH_USER_MODEL = 'users.User'
+SITE_ID = 1  # Assigns the site url. To edit, go to database, table "django_site"
 ALLOWED_HOSTS = []
+
+## ALLAUTH CONFIG PARAMS
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -49,19 +59,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     #Third-party apps:
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'dj_rest_auth',
+    'corsheaders',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     #Local apps:
     'users',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',            # to login into the admin site.
+)
+
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        # 'rest_framework.authentication.TokenAuthentication',
+    ),
     "DATETIME_FORMAT": "%d %B %Y - %X",
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer'
 }
 
 MIDDLEWARE = [
