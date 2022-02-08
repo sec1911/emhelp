@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os, sys
+import os, sys, json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=jg@p10i=tmewr)*nb8mf%vq7i-j8&89u!&*o!2!0^_gw1t43y'
+overrides = json.loads(open('./config.json').read())
+globals().update(overrides)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 AUTH_USER_MODEL = 'users.User'
 SITE_ID = 1  # Assigns the site url. To edit, go to database, table "django_site"
-ALLOWED_HOSTS = []
 
 ## ALLAUTH CONFIG PARAMS
 ACCOUNT_EMAIL_REQUIRED = True
@@ -93,6 +91,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -170,7 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

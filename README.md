@@ -22,10 +22,15 @@ $ source env/bin/activate
 (env) $ python -m pip install --upgrade pip
 (env) $ pip install -r requirements.txt
 ```
-#### Make migrations, create superuser and run the server :
+#### Make migrations and create a superuser :
 ```
 (env) $ python manage.py makemigrations
 (env) $ python manage.py migrate
 (env) $ python manage.py createsuperuser
-(env) $ daphne -b 0.0.0.0 -p 8000 emhelp.asgi:application
+```
+
+#### Collect all of the static content and run server:
+```
+(env) $ python manage.py collectstatic
+(env) $ gunicorn --bind=0.0.0.0:8000 emhelp.wsgi
 ```

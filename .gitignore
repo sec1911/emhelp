@@ -8,7 +8,7 @@ venv/
 .vscode
 __pycache__/
 
-backend/static/
+Backend/static/
 
 # dependencies
 front-end/node_modules

@@ -1,0 +1,9 @@
+{
+    "DEBUG": true,
+    "SECRET_KEY": "django-insecure-=jg@p10i=tmewr)*nb8mf%vq7i-j8&89u!&*o!2!0^_gw1t43y",
+    "ALLOWED_HOSTS": [
+        "localhost",
+        "0.0.0.0",
+        "127.0.0.1"
+    ]
+}
