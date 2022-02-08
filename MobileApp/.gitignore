@@ -1,39 +1,3 @@
-*.log
-local_settings.py
-db.sqlite3
-.env
-.venv
-env/
-venv/
-.vscode
-__pycache__/
-
-Backend/static/
-
-# dependencies
-front-end/node_modules
-front-end/.pnp
-front-end/.pnp.js
-
-# testing
-front-end/coverage
-
-# production
-front-end/build
-
-# misc
-front-end/.DS_Store
-front-end/.env.local
-front-end/.env.development.local
-front-end/.env.test.local
-front-end/.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-#linux
-nohup.out
-
 # Miscellaneous
 *.class
 *.log
