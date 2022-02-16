@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
-
+from .models import User
 
 class CustomRegisterSerializer(RegisterSerializer):
     username = None
@@ -20,3 +20,10 @@ class CustomRegisterSerializer(RegisterSerializer):
             'blood_type': self.validated_data.get('blood_type', ''),
             'date_of_birth': self.validated_data.get('date_of_birth', ''),
         }
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name", "date_of_birth", "blood_type", 
+        "special_conditions", "medications", "social_security_number", "last_login", "user_role"]
