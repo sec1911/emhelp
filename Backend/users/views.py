@@ -12,4 +12,4 @@ class HelloWorldView(APIView):
 
     def get(self, request, pk):
         user = get_object_or_404(User, pk=pk)
-        return Response("HELLO WORLD!")
+        return Response({"result": "Hello World!"})
