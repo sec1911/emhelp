@@ -29,6 +29,7 @@ AUTH_USER_MODEL = 'users.User'
 SITE_ID = 1  # Assigns the site url. To edit, go to database, table "django_site"
 
 ## ALLAUTH CONFIG PARAMS
+ACCOUNT_ADAPTER = 'users.adapters.CustomAccountAdapter'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False

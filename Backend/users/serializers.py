@@ -2,6 +2,7 @@ from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from .models import User
 
+
 class CustomRegisterSerializer(RegisterSerializer):
     username = None
     first_name = serializers.CharField(required=True)
