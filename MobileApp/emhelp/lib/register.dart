@@ -57,7 +57,6 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     scaffoldMessenger = ScaffoldMessenger.of(context);
-
     return Scaffold(
       key: scaffoldKey,
       body: SafeArea(
@@ -74,10 +73,9 @@ class _RegisterState extends State<Register> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(bottom: 50),
+                      padding: EdgeInsets.only(bottom: 50, top: 50),
                       child: Image(
                         image: AssetImage("assets/backgrounds/icon.png"),
                         height: 100,
@@ -219,7 +217,6 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     Container(
-                      alignment: Alignment.topCenter,
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pushReplacementNamed(
@@ -228,15 +225,15 @@ class _RegisterState extends State<Register> {
                         child: Text(
                           "Continue",
                           style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              decoration: TextDecoration.underline,
-                              decorationStyle: TextDecorationStyle.solid),
+                            color: Colors.black54,
+                            fontSize: 16,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 50),
+                      margin: EdgeInsets.all(40),
                       child: Column(
                         children: [
                           Text(
@@ -256,10 +253,10 @@ class _RegisterState extends State<Register> {
                             child: Text(
                               "LOGIN",
                               style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                  decoration: TextDecoration.underline,
-                                  decorationStyle: TextDecorationStyle.solid),
+                                color: Colors.black54,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
                         ],
@@ -302,11 +299,10 @@ class _RegisterContState extends State<RegisterCont> {
                 ),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                child: ListView(
+                  children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(bottom: 50),
+                      padding: EdgeInsets.only(bottom: 50, top: 50),
                       child: Image(
                         image: AssetImage("assets/backgrounds/icon.png"),
                         height: 100,
@@ -469,19 +465,41 @@ class _RegisterContState extends State<RegisterCont> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 25),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, '/login');
-                        },
-                        child: Text(
-                          "Go back to Login",
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              decoration: TextDecoration.underline,
-                              decorationStyle: TextDecorationStyle.solid),
-                        ),
+                      margin: EdgeInsets.all(50),
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                  context, '/register');
+                            },
+                            child: Text(
+                              "Go back to Register",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(context, '/login');
+                            },
+                            child: Text(
+                              "Go back to Login",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -505,23 +523,41 @@ class _RegisterContState extends State<RegisterCont> {
       'social_security_number': socialSecNo,
       'blood_type': bloodType,
       'date_of_birth': dateOfBirth
-      //"phoneNo": phoneNo
+      //"phone_number": phoneNo
     };
 
-    print(data.toString());
+    print(data);
 
     final response =
         await http.post(Uri.parse(Api.register), headers: {}, body: data);
 
-    print(response.body);
     if (response.statusCode == 201) {
       setState(() {
         isLoading = false;
       });
 
+      print(response.body);
+
       Map<String, dynamic> responseData = jsonDecode(response.body);
 
-      savePref(1, responseData['key']);
+      String AuthHeader = "Token " + responseData['key'];
+
+      final detailResponse = await http.get(Uri.parse(Api.accountDetails),
+          headers: {HttpHeaders.authorizationHeader: AuthHeader});
+
+      print(detailResponse.body);
+      print(detailResponse.statusCode);
+
+      if (detailResponse.statusCode == 200) {
+        Map<String, dynamic> detailResponseData =
+            jsonDecode(detailResponse.body);
+        savePref(1, responseData['key'], detailResponseData);
+      } else if (detailResponse.statusCode == 401) {
+        scaffoldMessenger.showSnackBar(SnackBar(
+            content: Text("Login failed, please contact with system admin")));
+        failExit();
+        Navigator.pushReplacementNamed(context, '/login');
+      }
       Navigator.pushReplacementNamed(context, '/home');
     } else if (response.statusCode == 400) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
@@ -540,10 +576,26 @@ class _RegisterContState extends State<RegisterCont> {
     }
   }
 
-  savePref(int _loginStatus, String key) async {
+  savePref(int _loginStatus, String key, Map<String, dynamic> detail) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setInt("loginStatus", _loginStatus);
     preferences.setString("key", key);
+    preferences.setString("email", detail['email']);
+    preferences.setString("first_name", detail['first_name']);
+    preferences.setString("last_name", detail['last_name']);
+    preferences.setString("date_of_birth", detail['date_of_birth']);
+    preferences.setString("blood_type", detail['blood_type']);
+    preferences.setString("special_conditions", detail['special_conditions']);
+    preferences.setString("medications", detail['medications']);
+    preferences.setString(
+        "social_security_number", detail['social_security_number']);
+    preferences.setString("last_login", detail['last_login']);
+    preferences.setString("user_role", detail['user_role']);
+  }
+
+  failExit() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
   }
 }

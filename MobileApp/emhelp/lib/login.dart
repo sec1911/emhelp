@@ -245,29 +245,63 @@ class _LoginState extends State<Login> {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
 
-      savePref(1, responseData['key']);
+      String AuthHeader = "Token " + responseData['key'];
+
+      final detailResponse = await http.get(Uri.parse(Api.accountDetails),
+          headers: {HttpHeaders.authorizationHeader: AuthHeader});
+
+      if (detailResponse.statusCode == 200) {
+        Map<String, dynamic> detailResponseData =
+            jsonDecode(detailResponse.body);
+
+        savePref(1, responseData['key'], detailResponseData);
+      } else if (detailResponse.statusCode == 401) {
+        scaffoldMessenger.showSnackBar(SnackBar(
+            content: Text("Login failed, please contact with system admin")));
+        failExit();
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+
       Navigator.pushReplacementNamed(context, '/home');
     } else if (response.statusCode == 400) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
 
       for (var value in responseData.keys) {
-        scaffoldMessenger.showSnackBar(
-            SnackBar(content: Text("${value}: ${responseData[value]}")));
+        scaffoldMessenger
+            .showSnackBar(SnackBar(content: Text("${responseData[value]}")));
       }
+      Navigator.pushReplacementNamed(context, '/login');
     } else {
       Map<String, dynamic> responseData = jsonDecode(response.body);
 
       for (var value in responseData.keys) {
-        scaffoldMessenger.showSnackBar(
-            SnackBar(content: Text("${value}: ${responseData[value]}")));
+        scaffoldMessenger
+            .showSnackBar(SnackBar(content: Text("${responseData[value]}")));
       }
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
-  savePref(int _loginStatus, String key) async {
+  savePref(int _loginStatus, String key, Map<String, dynamic> detail) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setInt("loginStatus", _loginStatus);
     preferences.setString("key", key);
+    preferences.setString("email", detail['email']);
+    preferences.setString("first_name", detail['first_name']);
+    preferences.setString("last_name", detail['last_name']);
+    preferences.setString("date_of_birth", detail['date_of_birth']);
+    preferences.setString("blood_type", detail['blood_type']);
+    preferences.setString("special_conditions", detail['special_conditions']);
+    preferences.setString("medications", detail['medications']);
+    preferences.setString(
+        "social_security_number", detail['social_security_number']);
+    preferences.setString("last_login", detail['last_login']);
+    preferences.setString("user_role", detail['user_role']);
+  }
+
+  failExit() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
   }
 }

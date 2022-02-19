@@ -1,3 +1,4 @@
+import 'package:emhelp/accountDetails.dart';
 import 'package:emhelp/login.dart';
 import 'package:flutter/material.dart';
 import 'package:emhelp/home.dart';
@@ -38,6 +39,7 @@ class _EmhelpState extends State<Emhelp> {
         '/login': (BuildContext context) => Login(),
         '/register': (BuildContext context) => Register(),
         '/registercont': (BuildContext context) => RegisterCont(),
+        '/account': (BuildContext context) => Account(),
       },
     );
   }
