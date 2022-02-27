@@ -7,3 +7,10 @@ class HasRole(BasePermission):
     """
     def has_permission(self, request, view):
         return isinstance(request.user, User) and not request.user.user_role == User.NO_ROLE
+
+class IsOperator(BasePermission):
+    """
+    Permission class for checking if user is Operator or not
+    """
+    def has_permission(self, request, view):
+        return isinstance(request.user, User) and request.user.is_operator()

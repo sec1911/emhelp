@@ -2,8 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import CustomUserManager
-
+from django.core.validators import RegexValidator
 class User(AbstractUser):
+
+    phone_regex = RegexValidator(regex=r'^(5)\d{9}$', message='Enter your phone number in format: 5xxxxxxxxx')
+    ssn_regex = RegexValidator(regex=r'^\d{11}$', message='Enter your 11-digit social security number.')
+
 
     objects = CustomUserManager()
     username = None
@@ -16,6 +20,8 @@ class User(AbstractUser):
     medications = models.CharField(blank=True, max_length=100)
     social_security_number = models.CharField(blank=True, max_length=100)
     last_login = models.DateField(verbose_name='last login', auto_now=True)
+    isApproved = models.BooleanField(default=True)
+    phone_number = models.CharField(max_length=20, blank=True)
 
     NO_ROLE = 'none'
     OPERATOR = 'operator'
