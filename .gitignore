@@ -8,7 +8,10 @@ venv/
 .vscode
 __pycache__/
 
+
+#media/static
 Backend/static/
+Backend/media/
 
 # dependencies
 front-end/node_modules
@@ -104,3 +107,4 @@ app.*.map.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
