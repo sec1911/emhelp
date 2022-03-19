@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from .models import EmergencyRequest
+from users.serializers import UserRelatedField
 
 class EmergencyRequestPostSerializer(serializers.ModelSerializer):
     
@@ -17,4 +18,12 @@ class EmergencyRequestPostSerializer(serializers.ModelSerializer):
             'altitude': {'required': True},
             'incident_type': {'required': True},
             'message': {'required': True},
+            'unit_type': {'required': True},
         }
+
+class EmergencyRequestSerializer(serializers.ModelSerializer):
+    opened_by = UserRelatedField(read_only=True)
+
+    class Meta:
+        model = EmergencyRequest
+        fields = "__all__"

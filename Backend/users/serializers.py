@@ -129,3 +129,13 @@ class CustomLoginSerializer(LoginSerializer):
         if not user.isApproved:
             msg = _('Your account has not been approved by operators yet. Try again later.')
             raise exceptions.ValidationError(msg)
+
+class UserRelatedField(serializers.RelatedField):
+    def to_representation(self, user):
+        try:
+            return({
+                'id': user.id,
+                'name': f'{user.first_name} {user.last_name} ({user.email})',
+            })
+        except:
+            return 'Error: User not found. Account may be deleted.'
