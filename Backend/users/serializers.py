@@ -3,10 +3,21 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from rest_framework import exceptions, serializers
 from django.utils.translation import gettext_lazy as _
-from .models import User
+from .models import User, UnitLocation
 from .adapters import UnitAccountAdapter
 from django.core.exceptions import ValidationError as DjValidationError
 from allauth.account.utils import setup_user_email
+
+class UnitLocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UnitLocation
+        fields = "__all__"
+        extra_kwargs = {
+            'longitude': {'required': True},
+            'latitude': {'required': True},
+            'unit': {'required': True}
+        }
 
 class UnitRegisterSerializer(RegisterSerializer):
     username = None
@@ -14,6 +25,17 @@ class UnitRegisterSerializer(RegisterSerializer):
     last_name = serializers.CharField(required=True)
     social_security_number= serializers.CharField(required=True)
     user_role = serializers.ChoiceField(required=True, choices=User.USER_ROLE_CHOICES)
+    longitude = serializers.DecimalField(required=True, max_digits=22, decimal_places=16)
+    latitude = serializers.DecimalField(required=True, max_digits=22, decimal_places=16)
+    phone_number = serializers.CharField(required=True)
+
+    def validate_phone_number(self, pn):
+        validator = User.phone_regex
+        try:
+            validator(pn)
+        except DjValidationError:
+            raise serializers.ValidationError(_(validator.message))
+        return pn
 
     def validate_social_security_number(self, ssn):
         validator = User.ssn_regex
@@ -31,12 +53,17 @@ class UnitRegisterSerializer(RegisterSerializer):
             'last_name': self.validated_data.get('last_name', ''),
             'social_security_number': self.validated_data.get('social_security_number', ''),
             'user_role': self.validated_data.get('user_role', ''),
+            'longitude': self.validated_data.get('longitude', ''),
+            'latitude': self.validated_data.get('latitude', ''),
+            'phone_number': self.validated_data.get('phone_number', '')
         }
     
     def save(self, request):
         adapter = UnitAccountAdapter(None)
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
+        longitude_ = self.cleaned_data.pop("longitude")
+        latitude_ = self.cleaned_data.pop("latitude")
         user = adapter.save_user(request, user, self)
 
         if "password1" in self.cleaned_data:
@@ -46,6 +73,10 @@ class UnitRegisterSerializer(RegisterSerializer):
                 raise serializers.ValidationError(detail=serializers.as_serializer_error(exception))
         user.save()
         setup_user_email(request, user, [])
+        unit_loc_obj = UnitLocation.objects.create(unit=user, longitude=longitude_, latitude=latitude_)
+        # unit_loc_ser = UnitLocationSerializer(unit=user, longitude=longitude_, latitude=latitude_)
+        # if unit_loc_ser.is_valid():
+        #     unit_loc_ser.save()
         return user
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -135,7 +166,7 @@ class UserRelatedField(serializers.RelatedField):
         try:
             return({
                 'id': user.id,
-                'name': f'{user.first_name} {user.last_name} ({user.email})',
+                'name': f'{user.first_name} {user.last_name} ({user.phone_number})',
             })
         except:
             return 'Error: User not found. Account may be deleted.'

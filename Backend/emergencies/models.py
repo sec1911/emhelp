@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from users.models import User
+
 class EmergencyRequest(models.Model):
 
     FIREFIGHTER = 'firefighter'
@@ -24,3 +26,4 @@ class EmergencyRequest(models.Model):
     incident_type = models.CharField(max_length=30, blank=False, null=False)
     message = models.TextField(blank=True, null=False)
     unit_type = models.CharField(max_length = 15, choices=UNIT_TYPE_CHOICES, default=POLICE, blank=False, null=False)
+    assigned_units = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='assigned_emergencies')

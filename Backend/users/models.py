@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from .managers import CustomUserManager
 from django.core.validators import RegexValidator
+from django.conf import settings
+
 class User(AbstractUser):
 
     phone_regex = RegexValidator(regex=r'^(5)\d{9}$', message='Enter your phone number in format: 5xxxxxxxxx')
@@ -57,3 +59,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+class UnitLocation(models.Model):
+    unit = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    longitude = models.DecimalField(max_digits=22, decimal_places=16, blank=False, null=False, default=32.866287)
+    latitude = models.DecimalField(max_digits=22, decimal_places=16, blank=False, null=False, default=39.925533)
