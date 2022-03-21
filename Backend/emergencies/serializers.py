@@ -23,6 +23,7 @@ class EmergencyRequestPostSerializer(serializers.ModelSerializer):
 
 class EmergencyRequestSerializer(serializers.ModelSerializer):
     opened_by = UserRelatedField(read_only=True)
+    assigned_units = UserRelatedField(read_only=True, many=True)
 
     class Meta:
         model = EmergencyRequest
