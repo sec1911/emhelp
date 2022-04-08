@@ -130,7 +130,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["email", "first_name", "last_name", "date_of_birth", "blood_type", 
-        "special_conditions", "medications", "social_security_number", "last_login", "user_role"]
+        "special_conditions", "medications", "social_security_number", "last_login", "user_role", "phone_number"]
 
 class OperatorCustomLoginSerializer(LoginSerializer):
 
