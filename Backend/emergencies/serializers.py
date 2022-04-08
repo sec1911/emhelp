@@ -12,7 +12,7 @@ class EmergencyRequestPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmergencyRequest
         fields = "__all__"
-        read_only_fields = ['id', 'date_created', 'opened_by', 'is_active', 'action_taken']
+        read_only_fields = ['id', 'date_created', 'opened_by', 'is_active', 'action_taken', 'assigned_units']
         extra_kwargs = {
             'longitude': {'required': True},
             'altitude': {'required': True},
