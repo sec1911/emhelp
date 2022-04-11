@@ -93,3 +93,15 @@ class CustomLoginView(DRA_LoginView):
     """
     ## Override Login serializer with Custom serializer
     serializer_class = CustomLoginSerializer
+
+class UpdateUserView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)

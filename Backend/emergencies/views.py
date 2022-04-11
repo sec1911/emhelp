@@ -47,7 +47,7 @@ class AssignUnitsView(APIView):
     Emergency Request object with status code 200 if successful
     Not found error with code 404 if one or more unit ids or emergency request id is invalid
     Not authorized response with status code 401 if user making the request is not Operator
-    Bad request error with status code 201 if "unit_ids" are not specified.
+    Bad request error with status code 400 if "unit_ids" are not specified.
     """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsOperator]
@@ -63,7 +63,7 @@ class AssignUnitsView(APIView):
                 emergency_object.assigned_units.add(unit)
             return Response(EmergencyRequestSerializer(emergency_object).data)
         else:
-            return Response({"unit_ids": "This field is required."}, status=201)
+            return Response({"unit_ids": "This field is required."}, status=400)
 
 class UnitAssignedEmergencyListView(viewsets.ViewSet):
     authentication_classes = [TokenAuthentication]
@@ -77,4 +77,14 @@ class UnitAssignedEmergencyListView(viewsets.ViewSet):
     def list_active(self, request):
         unit = get_object_or_404(User, pk=request.user.id)
         serializer = EmergencyRequestSerializer(unit.assigned_emergencies.filter(is_active=True), many=True)
+        return Response(serializer.data)
+
+class EmergencyClosedView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [HasRole]
+
+    def post(self, request, emergency_id):
+        emergency_object = get_object_or_404(EmergencyRequest, pk=emergency_id)
+        emergency_object.is_active = False
+        serializer = EmergencyRequestSerializer(emergency_object)
         return Response(serializer.data)

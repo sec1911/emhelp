@@ -24,6 +24,9 @@ class EmergencyRequestPostSerializer(serializers.ModelSerializer):
 class EmergencyRequestSerializer(serializers.ModelSerializer):
     opened_by = UserRelatedField(read_only=True)
     assigned_units = UserRelatedField(read_only=True, many=True)
+    seeker_blood_type = serializers.CharField(source='opened_by.blood_type')
+    seeker_conditions = serializers.CharField(source='opened_by.special_conditions')
+    seeker_medications = serializers.CharField(source='opened_by.medications')
 
     class Meta:
         model = EmergencyRequest

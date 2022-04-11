@@ -1,6 +1,9 @@
 + TODO : Units assigned reference from emergency
 + TODO : Unit register location endpoint
 + TODO : Unit assignment to the Emergency
-TODO : Incident closed endpoint (by units)
 + TODO : Unit related field for emergency responses
 + TODO : Unit fetch assigned emergencies
++ TODO : Return blood type and special conditions with emergency request JSON
++ TODO : Incident closed endpoint (by units)
++ TODO : Endpoint for editing special conditions and medications
+TODO : Unit suggestion system and endpoint
