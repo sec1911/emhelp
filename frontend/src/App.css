@@ -1,38 +1,100 @@
-.App {
+.navbar-icon {
+  margin-right: 10px;
+  margin-bottom: 3px;
+}
+.container {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  position: center;
+  min-width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-size: cover;
+  background-position: center;
+}
+.navbar-brand {
+  margin-left: 15px;
+  font-family: Consolas;
+}
+nav{
+  margin-left: -15px;
+  margin-right: -10px;
+  color: purple;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.card-container.card {
+  max-width: 350px !important;
+  padding: 40px 40px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.input-form{
+  border-radius: 2rem;
+  width: 300px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes pulse {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1)
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    background-color: rgba(165, 165, 165, 0.3)
   }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1)
+  }
+}
+
+.m-0{
+  text-align:center;
+}
+
+.mb-2{
+  width: 300px;
+  padding: 30px 25px 20px;
+  margin: 15rem auto 55px;
+}
+
+.card-card-container {
+  background-color: lightcoral;
+  width: 400px;
+  padding: 30px 25px 20px;
+  margin: 10rem auto 55px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2rem;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.profile-img-card {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.form-control{
+  width: 200px;
+  height: 30px;
+  margin: 5px auto 5px;
+  border-radius: 2rem;
+}
+
+.button-group{
+  width: 125px;
+  height: 30px;
+  margin: 5px auto 5px;
+  border-radius: 2rem;
 }

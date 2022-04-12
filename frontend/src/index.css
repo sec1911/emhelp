@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.case-badge {
+  border-radius: 2px;
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.case-badge.status-active {
+  background-color: #C8E6C9;
+  color: #256029;
+}
+
+.case-badge.status-inactive {
+  background-color: #FFCDD2;
+  color: #C63737;
+}
