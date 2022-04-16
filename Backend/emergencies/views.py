@@ -86,5 +86,6 @@ class EmergencyClosedView(APIView):
     def post(self, request, emergency_id):
         emergency_object = get_object_or_404(EmergencyRequest, pk=emergency_id)
         emergency_object.is_active = False
+        emergency_object.save()
         serializer = EmergencyRequestSerializer(emergency_object)
         return Response(serializer.data)
