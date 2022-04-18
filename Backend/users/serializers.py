@@ -170,3 +170,12 @@ class UserRelatedField(serializers.RelatedField):
             })
         except:
             return 'Error: User not found. Account may be deleted.'
+
+class UnitSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name", "user_role", "phone_number"]
+
+class UnitLocationSerializer(UnitLocationSerializer):
+    unit = UnitSerializer()

@@ -6,7 +6,8 @@ from .views import (HelloWorldView,
                     CustomLoginView,
                     UnitApproveView,
                     UnapprovedUnitsView,
-                    UpdateUserView)
+                    UpdateUserView,
+                    ListAllUnitsView)
 
 from dj_rest_auth.views import LoginView
 from dj_rest_auth.registration.views import RegisterView
@@ -15,6 +16,7 @@ urlpatterns = [
     #path('admin-login', LoginView.as_view()),
     #path('', views.UserSelfDetail.as_view()),
     path('list-unapproved', UnapprovedUnitsView.as_view()),
+    path('list-all-units', ListAllUnitsView.as_view()),
     path('approve-unit/<int:user_id>', UnitApproveView.as_view()),
     path('account/details', UserSelfDetail.as_view()),
     path('account/login/', CustomLoginView.as_view()),

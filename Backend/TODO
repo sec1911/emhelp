@@ -6,6 +6,7 @@
 + TODO : Return blood type and special conditions with emergency request JSON
 + TODO : Incident closed endpoint (by units)
 + TODO : Endpoint for editing special conditions and medications
-TODO : Fix close emergency endpoint
-TODO : Unit suggestion system and endpoint
++ TODO : Fix close emergency endpoint
++ TODO : Unit listing endpoint
 TODO : Statistics API
+TODO : FCM implementation, endponts
