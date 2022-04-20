@@ -175,7 +175,7 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "first_name", "last_name", "user_role", "phone_number"]
+        fields = ["id", "email", "first_name", "last_name", "user_role", "phone_number"]
 
 class UnitLocationSerializer(UnitLocationSerializer):
     unit = UnitSerializer()
