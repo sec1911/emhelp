@@ -1,5 +1,4 @@
 import CaseTable from "./CaseTable";
-import SimpleMap from "./SimpleMap";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect  } from 'react';
 import CaseService from "../services/CaseService";

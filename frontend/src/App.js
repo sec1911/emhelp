@@ -1,21 +1,18 @@
 import './App.css';
-import { Routes ,Route, Link } from 'react-router-dom';
-import LoginPage from "./components/LoginPage";
+import { Routes ,Route} from 'react-router-dom';
 import React, {useEffect, useState} from "react";
-import SignInSide from "./components/SignInSide";
-import Dashboard from "./components/Dashboard";
 import Detail from "./components/Detail";
 import Login from "./components/Login";
 import Choice from "./components/Choice";
 import CaseDetail from "./components/CaseDetail";
 import AuthService from "./services/AuthService";
-import MenuAppBar from "./components/MenuAppBar";
 import Home from "./components/Home";
-import IconMenu from "./components/IconMenu";
-
+import Register from "./components/Register";
+import UnapprovedList from "./components/UnapprovedList";
+import RequireAuth from "./components/RequiredAuth";
 
 function App() {
-    const [user, setUser] = useState(null) ;
+    const [user, setUser] = useState('') ;
 
     useEffect(() => {
         setUser(AuthService.getCurrentUser())
@@ -24,18 +21,18 @@ function App() {
   return (
 
       <div className="container">
-          { user ?
-              (<Dashboard/>) : null
-          }
 
-        <div style={{marginTop:40,marginLeft:20,marginRight:20,color:"black"}}>
-          <Routes>
-              <Route exact path={"/"} element={<Choice/>} />
-              <Route exact path={"/login"} element={<Login/>} />
-              <Route exact path={"/home"} element={<Home/>} />
-              <Route exact path={"/detail"} element={<Detail/>} />
-              <Route exact path={"/case"} element={<CaseDetail/>} />
-          </Routes>
+        <div>
+                <Routes>
+                    <Route exact path={"/"} element={<Choice/>} />
+                    <Route exact path={"/login"} element={<Login/>} />
+                    <Route exact path={"/home"} element={<RequireAuth> <Home/> </RequireAuth> } />
+                    <Route exact path={"/detail"} element={<RequireAuth> <Detail/> </RequireAuth>} />
+                    <Route exact path={"/case"} element={<RequireAuth> <CaseDetail/> </RequireAuth>} />
+                    <Route exact path={"/register"} element={<Register/>} />
+                    <Route path="/user-list" element={<RequireAuth> <UnapprovedList/> </RequireAuth>} />
+                </Routes>
+
         </div>
       </div>
   );

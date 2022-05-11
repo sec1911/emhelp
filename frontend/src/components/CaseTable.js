@@ -7,10 +7,9 @@ import React, { useState, useEffect  } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import '../design/DataTableDemo.css';
-import CaseService from "../services/CaseService";
+import Dashboard from "./Dashboard";
 
 const CaseTable = ({dataset}) => {
     const [cases, setCases] = useState(null);
@@ -22,7 +21,7 @@ const CaseTable = ({dataset}) => {
                 setCases(res.data)
             }
         );*/
-        document.body.style.backgroundColor = "pink"
+        document.body.style.backgroundColor = "#e3e3d1"
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
@@ -59,13 +58,23 @@ const CaseTable = ({dataset}) => {
         );
     }
 
+    const messageBodyTemplate = (rowData) => {
+        return <span ><p>{rowData.message}</p></span>;
+    }
+
     const statusBodyTemplate = (rowData) => {
         const stat = rowData.is_active === true ? 'active' : 'inactive';
         return <span className={`case-badge status-${stat}`}>{stat}</span>;
     }
 
+    const activityBodyTemplate = (rowData) => {
+        const stat = rowData.action_taken === true ? 'action' : 'no_action';
+        return <span className={`case-badge activity-${stat}`}>{stat}</span>;
+    }
+
     return (
-        <div className="datatable-doc-demo">
+        <div className="datatable-doc-demo" style={{marginTop: 85}}>
+            <Dashboard/>
             <div className="card">
                 <DataTable value={dataset} paginator className="p-datatable-customers" header={header} rows={10}
                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" rowsPerPageOptions={[5,10,25,50]}
@@ -76,9 +85,9 @@ const CaseTable = ({dataset}) => {
                     <Column body={getName} header="Name" style={{ minWidth: '14rem' }} />
                     <Column field="date_created" header="Date" sortable filterField="date" dataType="date" style={{ minWidth: '8rem' }}
                             filter filterElement={dateFilterTemplate} />
-                    <Column field="message" header="Message" style={{ minWidth: '14rem' }} />
+                    <Column field="message"  header="Message" body={messageBodyTemplate} style={{ width: 10, whiteSpace: 'normal' }} />
                     <Column field="is_active" header="Status" sortable body={statusBodyTemplate} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '10rem' }}  />
-                    <Column field="action_taken" header="Activity" showFilterMatchModes={false} style={{ minWidth: '10rem' }} />
+                    <Column field="action_taken" header="Activity" body={activityBodyTemplate} showFilterMatchModes={false} style={{ minWidth: '10rem' }} />
                     <Column headerStyle={{ width: '4rem', textAlign: 'center' }} header="Detail" bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
                 </DataTable>
             </div>

@@ -4,34 +4,22 @@ import { Toast } from 'primereact/toast';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
-import { useLocation, useNavigate, withRouter, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-// toast.current.show({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
 const HelpMenu = () => {
     const menu = useRef(null);
     const toast = useRef(null);
     const navigate = useNavigate();
-
-    const deneme = () => {
-        console.log("passed");
-    }
 
     const items = [
         {
             label: 'Cases',
             items: [
                 {
-                    label: 'New Cases',
+                    label: 'Active Cases',
                     icon: 'pi pi-refresh',
                     command: () => {
                         navigate('/detail', {state: 'active'});
-                    }
-                },
-                {
-                    label: 'Active Cases',
-                    icon: 'pi pi-check',
-                    command: () => {
-                        toast.current.show({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
                     }
                 },
                 {
@@ -51,13 +39,13 @@ const HelpMenu = () => {
                 {
                     label: 'Forward to Home',
                     icon: 'pi pi-external-link',
-                    url: 'https://reactjs.org/'
+                    url: 'https://www.112.gov.tr/'
                 },
                 {
                     label: 'Staff Management',
-                    icon: 'pi pi-upload',
+                    icon: 'pi pi-user-plus',
                     command:(e) => {
-                        window.location.hash = "/fileupload"
+                        navigate('/user-list');
                     }
                 }
             ]
@@ -68,8 +56,8 @@ const HelpMenu = () => {
         <div>
             <Toast ref={toast}></Toast>
 
-            <div className="card" sx={{ width: 320, maxWidth: '100%' }}>
-                <Menu model={items} style={{height: '300px', backgroundColor: "gray"}}/>
+            <div className="card" >
+                <Menu model={items} style={{marginLeft: -20, height: '720px', width: 245, backgroundColor: '#cdb4ce'}}/>
                 <Menu model={items} popup ref={menu} id="popup_menu" />
             </div>
         </div>

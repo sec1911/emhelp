@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -30,3 +35,19 @@ code {
   background-color: #FFCDD2;
   color: #C63737;
 }
+
+.case-badge.activity-action {
+  background-color: #C8E6C9;
+  color: #256029;
+}
+
+.case-badge.activity-no_action {
+  background-color: #FFCDD2;
+  color: #C63737;
+}
+
+.leaflet-container {
+  height: 600px;
+  width: 100%;
+}
+

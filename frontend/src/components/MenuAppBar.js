@@ -4,12 +4,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Logout from '@mui/icons-material/Logout';
@@ -45,7 +41,7 @@ export default function MenuAppBar({stateChanger}) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="fixed" color="secondary">
+            <AppBar position="fixed" color="secondary" sx={{ bgcolor: "#ba4f76" }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -57,13 +53,12 @@ export default function MenuAppBar({stateChanger}) {
                     >
                         <HomeIcon />
                     </IconButton>
-
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     </Typography>
                     {auth && (
                         <div>
                             <IconButton>
-                                <NotificationsIcon/>
+                                <NotificationsIcon style={{color: "white"}}/>
                             </IconButton>
                             <IconButton
                                 size="large"
@@ -90,8 +85,8 @@ export default function MenuAppBar({stateChanger}) {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}> <Avatar sx={{ height: '25px', width: '25px' }} />Profile</MenuItem>
-                                <MenuItem component="a" href="/" onClick={logOut}> <Logout />Log Out</MenuItem>
+                                <MenuItem onClick={handleClose}> <Avatar sx={{ marginRight: '10px', height: '25px', width: '25px' }} />  Profile</MenuItem>
+                                <MenuItem component="a" href="/" onClick={logOut}> <Logout sx={{marginRight: '10px'}}/>Log Out</MenuItem>
                             </Menu>
                         </div>
                     )}

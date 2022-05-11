@@ -16,7 +16,7 @@
 }
 nav{
   margin-left: -15px;
-  margin-right: -10px;
+  margin-right: -15px;
   color: purple;
 }
 label {
@@ -52,23 +52,19 @@ label {
 }
 
 .mb-2{
-  width: 300px;
-  padding: 30px 25px 20px;
-  margin: 15rem auto 55px;
+  width: 1000px;
+  padding: 300px 150px 200px;
+  margin: 0rem auto 0px;
 }
 
 .card-card-container {
   background-color: lightcoral;
   width: 400px;
   padding: 30px 25px 20px;
-  margin: 10rem auto 55px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2rem;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  opacity: 0.8;
+
 }
 
 ::-webkit-input-placeholder {
@@ -97,4 +93,22 @@ label {
   height: 30px;
   margin: 5px auto 5px;
   border-radius: 2rem;
+}
+
+.choice {
+  /* The image used */
+  /*background-image: url(src/resources/emhelpbackground.jpeg);*/
+  min-width: 100%;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.loginBackground{
+  min-width: 100%;
+  height: 100vh;
+  justify-content: center;
+  display: flex;
+  align-items:center;
 }

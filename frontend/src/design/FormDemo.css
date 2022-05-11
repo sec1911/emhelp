@@ -1,0 +1,27 @@
+.container{
+    min-width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.form-demo .card {
+    min-width: 350px;
+}
+.form-demo .card form {
+    margin-top: 2rem;
+}
+.form-demo .card .field {
+    margin-bottom: 1.5rem;
+}
+@media screen and (max-width: 960px) {
+    .form-demo .card {
+        width: 70%;
+    }
+}
+@media screen and (max-width: 640px) {
+    .form-demo .card {
+        width: 90%;
+        min-width: 0;
+    }
+}
