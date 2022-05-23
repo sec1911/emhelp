@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,6 +8,7 @@ import 'package:emhelp/screens/emergencyRequest.dart';
 import 'package:emhelp/shared/failExit.dart';
 import 'package:emhelp/widgets/emergencyCard.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../api/api.dart' as Api;
@@ -155,6 +157,7 @@ class _HomeUnitState extends State<HomeUnit> {
               index: index + 1,
               voiceRecording: activeEmergencies[index]["voice_recording"],
               emergencyId: activeEmergencies[index]["id"],
+              isActive: true,
               state: () {
                 setState(() {
                   Navigator.push(
@@ -196,6 +199,7 @@ class _HomeUnitState extends State<HomeUnit> {
               message: inactiveEmergencies[index]["message"],
               openedByName: inactiveEmergencies[index]["opened_by"]["name"],
               dateCreated: inactiveEmergencies[index]["date_created"],
+              isActive: false,
               index: index + 1,
               state: () {
                 setState(() {});

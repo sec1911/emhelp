@@ -132,7 +132,7 @@ class _EmergencyRequestState extends State<EmergencyRequest> {
                                     ? "police"
                                     : data.name == "Ambulance"
                                         ? "medic"
-                                        : data.name == "Firefighter"
+                                        : data.name == "Fire Fighter"
                                             ? "firefighter"
                                             : "None";
                                 id = data.index;
@@ -219,6 +219,7 @@ class _EmergencyRequestState extends State<EmergencyRequest> {
   }
 
   send(message, unitType, audioPath) async {
+    print(unitType);
     var request = http.MultipartRequest(
         "POST", Uri.parse(Api.baseUrl + "emergencies/add"));
 

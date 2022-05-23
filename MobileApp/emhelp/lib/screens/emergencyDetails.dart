@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:emhelp/shared/audioPlayerMessage.dart';
 import 'package:emhelp/shared/failExit.dart';
 import 'package:flutter/foundation.dart';
@@ -6,6 +8,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:emhelp/shared/getName.dart' as getName;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:emhelp/api/api.dart' as Api;
@@ -43,9 +46,8 @@ class _EmergencyDetailsState extends State<EmergencyDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     List<LatLng> _latLngList = [
-      LatLng(double.parse(widget.latitude), double.parse(widget.longitude))
+      LatLng(double.parse(widget.latitude), double.parse(widget.longitude)),
     ];
     _markers = _latLngList
         .map(
@@ -56,7 +58,7 @@ class _EmergencyDetailsState extends State<EmergencyDetails> {
             builder: (context) => Icon(
               Icons.pin_drop_rounded,
               size: 30,
-              color: Colors.blueAccent,
+              color: Colors.redAccent,
             ),
           ),
         )
@@ -227,16 +229,11 @@ class _EmergencyDetailsState extends State<EmergencyDetails> {
                     disableClusteringAtZoom: 10,
                     size: Size(25, 25),
                     fitBoundsOptions: FitBoundsOptions(
-                      padding: EdgeInsets.all(25),
+                      padding: EdgeInsets.all(20),
                     ),
                     markers: _markers,
                     builder: (context, markers) {
-                      return Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.orange, shape: BoxShape.circle),
-                        child: Text('${markers.length}'),
-                      );
+                      return Container();
                     }),
               ],
             ),

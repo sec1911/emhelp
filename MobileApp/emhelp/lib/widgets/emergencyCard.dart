@@ -14,6 +14,7 @@ class EmergencyCard extends StatelessWidget {
   final int index;
   final String voiceRecording;
   final int emergencyId;
+  final bool isActive;
 
   EmergencyCard(
       {this.incidentType,
@@ -23,7 +24,8 @@ class EmergencyCard extends StatelessWidget {
       this.state,
       this.index,
       this.voiceRecording,
-      this.emergencyId});
+      this.emergencyId,
+      this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -120,29 +122,32 @@ class EmergencyCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                TextButton(
-                    onPressed: closeEmergency,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          Icons.cancel_rounded,
-                          color: Color(0xffd36060),
+                isActive == true
+                    ? TextButton(
+                        onPressed: closeEmergency,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.cancel_rounded,
+                              color: Color(0xffd36060),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Close Emergency",
+                              style: TextStyle(
+                                color: Color(0xffd36060),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Close Emergency",
-                          style: TextStyle(
-                            color: Color(0xffd36060),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ))
+                      )
+                    : Container(),
               ]),
             ),
           ),
