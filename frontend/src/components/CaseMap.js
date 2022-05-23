@@ -148,7 +148,7 @@ const CaseMap = ({caseId, long, lt, setValue}) => {
         let unitIds = unitList.join(',')
         console.log(unitIds);
         setValue(true)
-        //CaseService.sendUnits(caseId, unitIds).then()
+        CaseService.sendUnits(caseId, unitIds).then()
     }
 
     return (
